@@ -1,19 +1,45 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ConversionController;
+use App\Http\Controllers\CurrencyController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| USER
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| post:user/login         authenticate user
+| get:user/logout         authenticate user
 |
 */
+Route::post('/user/login', [UserController::class, 'login']);
+Route::get('/user/logout/{id}', [UserController::class, 'logout']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/*
+|--------------------------------------------------------------------------
+| CONVERSION
+|--------------------------------------------------------------------------
+| get:conversion/{id}             get conversion
+| get:conversion/user/{user_id}   list conversions by user (includes quotes)
+| post:conversion                 create conversion
+| update:conversion               update conversion
+| delete:conversion/{id}          delete conversion
+|
+*/
+Route::get('/conversion/{id}', [ConversionController::class, 'get']);
+Route::get('/conversion/user/{user_id}', [ConversionController::class, 'listByUser']);
+Route::post('/conversion', [ConversionController::class, 'create']);
+Route::update('/conversion', [ConversionController::class, 'update']);
+Route::delete('/conversion/{id}', [ConversionController::class, 'delete']);
+
+/*
+|--------------------------------------------------------------------------
+| CURRENCY
+|--------------------------------------------------------------------------
+| get:currency      list currencies
+|
+*/
+Route::get('/currency', [CurrencyController::class, 'list']);
+
+
