@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Conversion extends Model
+class Conversion extends BaseModel
 {
   protected $table = 'conversion';
 

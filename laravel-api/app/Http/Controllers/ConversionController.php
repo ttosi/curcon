@@ -7,6 +7,7 @@ use App\Models\Conversion;
 
 class ConversionController extends Controller
 {
+  // get:conversion/{id} - get conversion
   public function get($id)
   {
     return response(
@@ -15,6 +16,7 @@ class ConversionController extends Controller
     );
   }
 
+  // get:conversion/user/{user_id} - list conversions by user
   public function listByUser($user_id)
   {
     return response(
@@ -22,14 +24,17 @@ class ConversionController extends Controller
       200);
   }
 
+  // post:conversion - create conversion
   public function create(Request $request)
   {
   }
 
+  // update:conversion - update conversion
   public function update(Request $request)
   {
   }
 
+  // delete:conversion/{id} - delete conversion
   public function delete($id)
   {
   }

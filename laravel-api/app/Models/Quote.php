@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Quote extends Model
+class Quote extends BaseModel
 {
   protected $table = 'quote';
 

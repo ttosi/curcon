@@ -10,6 +10,7 @@ class CurrencyController extends Controller
   {
     return response(
       Currency::all(),
-    200);
+      200
+    );
   }
 }

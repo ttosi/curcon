@@ -1,5 +1,4 @@
 <?php
-// php artisan route:list
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -10,12 +9,12 @@ use App\Http\Controllers\CurrencyController;
 |--------------------------------------------------------------------------
 | USER
 |--------------------------------------------------------------------------
-| post:user/login         authenticate user
-| get:user/logout         authenticate user
+| post:user/login     authenticate user
+| get:user/logout     authenticate user
 |
 */
-Route::post('/user/login', [UserController::class, 'login']);
-Route::get('/user/logout/{id}', [UserController::class, 'logout']);
+Route::post('/login', [UserController::class, 'login']);
+Route::get('/logout/{id}', [UserController::class, 'logout'])->middleware('authorized');
 
 /*
 |--------------------------------------------------------------------------
@@ -28,19 +27,17 @@ Route::get('/user/logout/{id}', [UserController::class, 'logout']);
 | delete:conversion/{id}          delete conversion
 |
 */
-Route::get('/conversion/{id}', [ConversionController::class, 'get']);
-Route::get('/conversion/user/{user_id}', [ConversionController::class, 'listByUser']);
-Route::post('/conversion', [ConversionController::class, 'create']);
-Route::patch('/conversion', [ConversionController::class, 'update']);
-Route::delete('/conversion/{id}', [ConversionController::class, 'delete']);
+Route::get('/conversion/{id}', [ConversionController::class, 'get'])->middleware('authorized');
+Route::get('/conversion/user/{user_id}', [ConversionController::class, 'listByUser'])->middleware('authorized');
+Route::post('/conversion', [ConversionController::class, 'create'])->middleware('authorized');
+Route::patch('/conversion', [ConversionController::class, 'update'])->middleware('authorized');
+Route::delete('/conversion/{id}', [ConversionController::class, 'delete'])->middleware('authorized');
 
 /*
 |--------------------------------------------------------------------------
 | CURRENCY
 |--------------------------------------------------------------------------
-| get:currency      list currencies
+| get:currency    list currencies
 |
 */
-Route::get('/currency', [CurrencyController::class, 'list']);
-
-
+Route::get('/currency', [CurrencyController::class, 'list'])->middleware('authorized');
