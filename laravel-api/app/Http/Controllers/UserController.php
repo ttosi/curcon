@@ -11,7 +11,21 @@ class UserController extends Controller
   {
   }
 
-  public function logout($id)
+  // {
+  // }
+
+  public function update(Request $request)
   {
   }
+
+  public function logout($id)
+  {
+    error_log("logout ${id}");
+    $user = User::find($id);
+    error_log($user);
+  }
+
+  // public function delete($id)
+  // {
+  // }
 }

@@ -22,6 +22,6 @@ class User extends Model
 
   public function conversions()
   {
-    return $this->hasMany('App\Conversion');
+    return $this->hasMany('App\Models\Conversion');
   }
 }

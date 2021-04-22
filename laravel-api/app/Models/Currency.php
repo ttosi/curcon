@@ -14,14 +14,4 @@ class Currency extends Model
     'code',
     'name'
   ];
-
-  public function conversions()
-  {
-    return $this->hasMany('App\Conversion');
-  }
-
-  public function quotes()
-  {
-    return $this->hasMany('App\Quote');
-  }
 }

@@ -1,4 +1,5 @@
 <?php
+// php artisan route:list
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -30,7 +31,7 @@ Route::get('/user/logout/{id}', [UserController::class, 'logout']);
 Route::get('/conversion/{id}', [ConversionController::class, 'get']);
 Route::get('/conversion/user/{user_id}', [ConversionController::class, 'listByUser']);
 Route::post('/conversion', [ConversionController::class, 'create']);
-Route::update('/conversion', [ConversionController::class, 'update']);
+Route::patch('/conversion', [ConversionController::class, 'update']);
 Route::delete('/conversion/{id}', [ConversionController::class, 'delete']);
 
 /*

@@ -10,23 +10,18 @@ class Conversion extends Model
 
   protected $fillable = [
     'user_id',
-    'currency_id',
+    'currency',
     'amount',
     'created'
   ];
 
   public function user()
   {
-    return $this->belongsTo('App\User');
-  }
-
-  public function currency()
-  {
-    return $this->belongsTo('App\Currency');
+    return $this->belongsTo('App\Models\User');
   }
 
   public function quotes()
   {
-    return $this->hasMany('App\Quote');
+    return $this->hasMany('App\Models\Quote');
   }
 }
