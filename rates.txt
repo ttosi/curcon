@@ -1,0 +1,8 @@
+HTTP/2 403 
+server: nginx/1.19.1
+date: Wed, 21 Apr 2021 16:56:51 GMT
+content-type: application/json
+content-length: 197
+strict-transport-security: max-age=15724800; includeSubDomains
+
+{"error":{"type":"feature_authorization","message":"Please upgrade your account to perform this request.","details":{"required_features":["Latest rates","Historical rates","All base currencies"]}}}
