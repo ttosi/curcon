@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="ma-6 mt-10">
+    <v-card class="mt-5">
       <v-card-subtitle>
         <div class="float-left text-h5">
           <span 
@@ -17,11 +17,14 @@
             class="grey--text text--darken-2 amount" />
         </div>
         <div class="float-right">
-          <v-btn color="grey lighten-3 mr-3" fab small depressed>
-            <v-icon>mdi-plus-circle</v-icon>
+          <v-btn title="Refresh Quotes" color="grey lighten-3 mr-3" fab small depressed to>
+            <v-icon color="green darken-2">mdi-refresh</v-icon>
           </v-btn>
-          <v-btn color="grey lighten-3" fab small depressed>
-            <v-icon>mdi-trash-can</v-icon>
+          <v-btn title="Add Quote" color="grey lighten-3 mr-3" fab small depressed>
+            <v-icon color="green darken-2">mdi-plus</v-icon>
+          </v-btn>
+          <v-btn title="Delete Conversion" color="grey lighten-3" fab small depressed>
+            <v-icon color="green darken-2">mdi-trash-can-outline</v-icon>
           </v-btn>
         </div>
       </v-card-subtitle>
@@ -54,9 +57,9 @@ export default {
   data() {
     return {
       email: ""
-    };
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

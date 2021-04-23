@@ -1,22 +1,28 @@
 <template>
   <div>
-    <conversion v-for="conversion in conversions" :key="conversion.id" :conversion="conversion">
-    </conversion>
-    <!-- <div v-for="conversion in conversions" :key="conversion.id">
-      {{ conversion.currency }}<br>
-      {{ conversion.amount }}
-      <div v-for="quote in conversion.quotes" :key="quote.id">
-        --{{ quote.currency }}<br>
-        --{{ quote.rate }}
-      </div>
-    </div> -->
-    <!-- </div> -->
+    <div>
+      <v-btn color="green darken-3" depressed dark>Add Conversion</v-btn>
+      <v-btn
+        @click="list" 
+        class="float-right"
+        title="Refresh All"
+        color="grey lighten-3 mr-3"
+        fab small depressed to>
+        <v-icon color="green darken-2">mdi-refresh</v-icon>
+      </v-btn>
+    </div>
+    <div>
+      <conversion
+        v-for="conversion in conversions"
+        :key="conversion.id"
+        :conversion="conversion" />
+    </div>
   </div>
 </template>
 
 <script>
-import network from "@/services/network";
 import Conversion from "@/components/Conversion";
+import conversion from "@/entities/Conversion";
 
 export default {
   name: "Home",
@@ -25,13 +31,17 @@ export default {
   },
   data() {
     return {
-      conversions: [],
+      conversions: []
     }
   },
+  methods: {
+    async list() {
+      console.log("LIST!!!!!!!!")
+      this.conversions = await conversion.list()
+    },
+  },
   async mounted() {
-    this.conversions = await network.get(
-      `/api/conversion/user/${this.$store.state.userId}`
-    );
+    this.list()
   }
 }
 </script>

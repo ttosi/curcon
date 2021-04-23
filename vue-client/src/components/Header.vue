@@ -5,7 +5,7 @@
       <v-toolbar-title>
         Curcon
         <span class="ml-3 caption">
-          For all your urgent currency conversion needs
+          For all your currency conversion needs
         </span>
       </v-toolbar-title>
       <v-spacer></v-spacer>

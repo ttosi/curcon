@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import network from "@/services/network"
-
 export default {
   name: "Login",
   components: {},
@@ -43,9 +41,8 @@ export default {
         return
       }
 
-      console.info(user)
-      this.$store.dispatch("setToken", user.auth_token)
-      this.$store.dispatch("setUserId", user.id)
+      // user authentication successful
+      this.$store.dispatch("setUser", user)
       this.$router.push("/")
     }
   }

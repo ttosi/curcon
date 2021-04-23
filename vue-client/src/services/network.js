@@ -1,4 +1,4 @@
-import store from '@/store'
+import store from "@/store";
 
 const network = {
   apiUrl: "http://localhost:8000",
@@ -8,11 +8,14 @@ const network = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: store.state.token
-      },
+        Authorization: store.state.token,
+      }
     })
-    .then(res => res.json())
-    .then(data => { console.log(data); return data; });
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
   },
   post(endpoint, body) {
     return fetch(`${this.apiUrl}${endpoint}`, {
@@ -21,11 +24,13 @@ const network = {
         "Content-Type": "application/json",
         Authorization: store.state.token
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     })
-    .then(res => res.json())
-    .then(data => { return data; });
+    .then((res) => res.json())
+    .then((data) => {
+      return data;
+    });
   }
 };
 
-export default network
+export default network;
