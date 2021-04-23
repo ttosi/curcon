@@ -1,18 +1,37 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <conversion v-for="conversion in conversions" :key="conversion.id" :conversion="conversion">
+    </conversion>
+    <!-- <div v-for="conversion in conversions" :key="conversion.id">
+      {{ conversion.currency }}<br>
+      {{ conversion.amount }}
+      <div v-for="quote in conversion.quotes" :key="quote.id">
+        --{{ quote.currency }}<br>
+        --{{ quote.rate }}
+      </div>
+    </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import network from "@/services/network";
+import Conversion from "@/components/Conversion";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
+    Conversion
+  },
+  data() {
+    return {
+      conversions: [],
+    }
+  },
+  async mounted() {
+    this.conversions = await network.get(
+      `/api/conversion/user/${this.$store.state.userId}`
+    );
   }
 }
 </script>
