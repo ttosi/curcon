@@ -19,6 +19,7 @@ class ConversionController extends Controller
   // get:conversion/user/{user_id} - list conversions by user
   public function listByUser($user_id)
   {
+    error_log("here i am");
     return response(
       Conversion::where('user_id', $user_id)->with('quotes')->get(),
       200);

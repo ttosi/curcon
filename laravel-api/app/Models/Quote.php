@@ -8,8 +8,9 @@ class Quote extends BaseModel
 
   protected $fillable = [
     'conversion_id',
-    'currency',
     'rate',
+    'currency',
+    'country',
     'quote_date',
     'created'
   ];

@@ -9,6 +9,7 @@ class Conversion extends BaseModel
   protected $fillable = [
     'user_id',
     'currency',
+    'country',
     'amount',
     'created'
   ];

@@ -17,6 +17,8 @@ class Authorized
    */
   public function handle(Request $request, Closure $next)
   {
+    if(!$request->headers->has('Authorization')) return abort(401);
+    
     // not ideal
     $user = User::where(
       'auth_token', $request->header('Authorization')

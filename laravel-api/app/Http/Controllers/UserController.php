@@ -15,10 +15,8 @@ class UserController extends Controller
       ['password', hash('sha256', $request['password'])]
     ])->first();
 
-      echo $request->header('Authorization');
-
     // return unauthorized if user not found
-    if(!$user) return abort(401);
+    if (!$user) return response()->json(false);
 
     // success, create auth token
     $auth_token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -30,7 +28,7 @@ class UserController extends Controller
       );
 
     return response()->json([
-      'email' => $user['email'],
+      'id' => $user['id'],
       'auth_token' => $auth_token
     ]);
   }
