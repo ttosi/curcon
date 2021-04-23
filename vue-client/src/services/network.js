@@ -3,7 +3,6 @@ import store from "@/store";
 const network = {
   apiUrl: "http://localhost:8000",
   get(endpoint) {
-    // console.log(`${this.apiUrl}${endpoint}`)
     return fetch(`${this.apiUrl}${endpoint}`, {
       method: "GET",
       headers: {
@@ -13,7 +12,6 @@ const network = {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       return data;
     });
   },

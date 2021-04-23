@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <site-header v-if="isAuthenticated" />
+    <site-header v-if="isAuthenticated" class="mb-10" />
     <v-main class="ma-6">
       <router-view />
     </v-main>

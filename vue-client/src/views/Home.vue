@@ -2,17 +2,17 @@
   <div>
     <div>
       <v-btn color="green darken-3" depressed dark>Add Conversion</v-btn>
-      <v-btn
-        @click="list" 
-        class="float-right"
-        title="Refresh All"
-        color="grey lighten-3 mr-3"
-        fab small depressed to>
-        <v-icon color="green darken-2">mdi-refresh</v-icon>
+      <v-btn 
+        @click="list"
+        color="green darken-2"
+        small outlined
+        class="mt-3 float-right">
+          Refresh All
       </v-btn>
     </div>
     <div>
       <conversion
+        :loadingAll="loadingAll"
         v-for="conversion in conversions"
         :key="conversion.id"
         :conversion="conversion" />
@@ -31,13 +31,15 @@ export default {
   },
   data() {
     return {
-      conversions: []
+      conversions: [],
+      loadingAll: false
     }
   },
   methods: {
     async list() {
-      console.log("LIST!!!!!!!!")
+      this.loadingAll = true;
       this.conversions = await conversion.list()
+      this.loadingAll = false;
     },
   },
   async mounted() {

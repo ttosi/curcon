@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="green darken-3" dense dark>
+    <v-app-bar color="green darken-3" fixed dense dark>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title>
         Curcon

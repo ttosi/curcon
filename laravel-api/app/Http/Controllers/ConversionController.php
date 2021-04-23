@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conversion;
+// use Dotenv;
 
 class ConversionController extends Controller
 {
@@ -21,15 +22,15 @@ class ConversionController extends Controller
   {
     $conversions = Conversion::where('user_id', $user_id)->with('quotes')->get();
 
-    // THIS IS NOT IDEAL!
+    // THIS IS NOT IDEAL
     //  1. Makes request for each currency rate (!)
     //  2. Doesn't update DB with current rate,
     //     would be good to cache the rate and only
     //     make request if > 1 day old
     //  3. This business logic should be refactored
     //     to its own service class
-    $swop_base_url = "https://swop.cx/rest/rates";
-    $swop_api_key = "fe95375fcb9f0d7419e15eacca1c5ef4438c284d36caae2a2adf186632a2ddc4";
+    $swop_base_url = 'https://swop.cx/rest/rates';
+    $swop_api_key = getenv('SWOP_API_KEY');
 
     foreach ($conversions as $conversion)
     {
