@@ -1,29 +1,32 @@
 <template>
-  <div>
-    quote
-    {{ quote }}
-    <!-- <div v-for="conversion in conversions" :key="conversion.id">
-      {{ conversion.currency }}<br>
-      {{ conversion.amount }}
-      <div v-for="quote in conversion.quotes" :key="quote.id">
-        --{{ quote.currency }}<br>
-        --{{ quote.rate }}
-      </div>
-    </div> -->
-  </div>
+  <v-card class="pa-3 ma-1 grey--text text--darken-2" outlined>
+    <div class="font-weight-medium body-1">
+     <span 
+        class="flag-icon mr-1"
+        :class="`flag-icon-${(quote.country).toLowerCase()}`">
+      </span>
+      {{ calculated }}
+      {{ quote.currency }}
+      <v-icon class="ml-2 mb-1" style="cursor: pointer;" small>mdi-trash-can</v-icon>
+    </div>
+    <div class="mb-1">at {{ quote.rate }}</div>
+    <div class="caption">{{ Date.create(quote.quote_date).format() }}</div>
+  </v-card>
 </template>
 
 <script>
-import Quote from "@/components/Quote"
-
 export default {
   name: "Quote",
-  props: [ 'quote' ],
+  props: ["quote", "amount"],
   components: {},
   data() {
     return {
-      // conversions: []
-    };
+    }
+  },
+  computed: {
+    calculated() {
+      return (this.amount * this.quote.rate).toFixed(2)
+    }
   }
 }
 </script>
