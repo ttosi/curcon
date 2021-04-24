@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conversion;
-// use Dotenv;
 
 class ConversionController extends Controller
 {
@@ -32,17 +31,17 @@ class ConversionController extends Controller
     $swop_base_url = 'https://swop.cx/rest/rates';
     $swop_api_key = getenv('SWOP_API_KEY');
 
-    foreach ($conversions as $conversion)
+    foreach ($conversions as $conversion) 
     {
       $request_url = "$swop_base_url?base_currency=$conversion->currency";
-      foreach ($conversion->quotes as $quote)
+      foreach ($conversion->quotes as $quote) 
       {
         $curl = curl_init("$request_url&quote_currencies=$quote->currency&api-key=$swop_api_key");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        
+
         $res = json_decode(curl_exec($curl));
         $quote->rate = $res[0]->quote;
-        
+
         curl_close($curl);
       }
     }
@@ -53,6 +52,14 @@ class ConversionController extends Controller
   // post:conversion - create conversion
   public function create(Request $request)
   {
+    $conversion = new Conversion;
+    $conversion->user_id = $request->userId;
+    $conversion->currency = $request->currency;
+    $conversion->country = $request->country;
+    $conversion->amount = 1.00;
+    $conversion->save();
+
+    return response()->json(['id', $conversion->id]);
   }
 
   // update:conversion - update conversion

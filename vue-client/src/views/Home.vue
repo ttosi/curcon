@@ -14,7 +14,7 @@
           Add Conversion
         </v-btn>
         <v-btn @click="list" color="green darken-2" small outlined class="mt-3 float-right">
-            Refresh All
+          Refresh All
         </v-btn>
       </div>
       <div>
@@ -24,9 +24,9 @@
           :conversion="conversion" />
       </div>
     </div>
-    <v-dialog v-model="dialog" max-width="800" persistent>
+    <v-dialog v-model="dialog" max-width="800">
       <v-card>
-        <v-card-subtitle class="pa-3 pl-5 text-h6 green lighten-3">
+        <v-card-subtitle class="pa-3 pl-5 font-weight-regular text-h6 green darken-3 white--text">
           New Currency Conversion
         </v-card-subtitle>
         <v-card-text class="pb-0">
@@ -57,10 +57,10 @@
         </v-card-text>
         <v-card-actions class="pb-4 pr-4">
           <v-spacer></v-spacer>
-          <v-btn @click="save" color="green darken-2" small outlined class="mt-3 float-right">
-            Create
+          <v-btn @click="save" color="green darken-2" dark small>
+            Save
           </v-btn>
-          <v-btn color="green darken-2" small outlined class="mt-3 float-right">
+          <v-btn @click="dialog = false" class="ml-4" color="green darken-2" small outlined>
             Cancel
           </v-btn>
         </v-card-actions>
@@ -90,40 +90,42 @@ export default {
     }
   },
   methods: {
-    async list() {
-      this.loading = true;
-      this.conversions = await conversion.list()
-      this.conversions.sort(s => s.id).reverse()
-      this.loading = false
-    },
     add() {
       this.dialog = true
-    },
-    save() {
-      console.log(this.selected)
-      // await save to db
-      const conversion = {
-        id: 10,
-        amount: "1.00",
-        country: this.selected.country_code,
-        currency: this.selected.currency_code,
-        quotes: []
-      }
-      this.conversions.push(conversion)
-      this.conversions.sort(s => s.id).reverse()
-      this.dialog = false
     },
     filter(item, query) {
       return (
         item.currency_code.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
         item.country.toLowerCase().indexOf(query.toLowerCase()) > -1
       )
+    },
+    async list() {
+      this.loading = true;
+      this.conversions = await conversion.list()
+      this.conversions.sort(c => c.id).reverse()
+      this.loading = false
+    },
+    async save() {
+      const conv = {
+        amount: "1.00",
+        country: this.selected.country_code,
+        currency: this.selected.currency_code,
+        quotes: []
+      }
+      conv.id = (await conversion.create(conv)).id
+      this.conversions.push(conv)
+      this.conversions.sort(c => c.id).reverse()
+      this.dialog = false
     }
   },
   async mounted() {
     this.list()
-    this.currencies = await currency.list()
-    this.currencies.sort(c => c.currency_code)
+    if (!localStorage.getItem("currencies")) {
+      this.currencies = await currency.list()
+      localStorage.setItem("currencies", JSON.stringify(this.currencies))
+    } else {
+      this.currencies = JSON.parse(localStorage.getItem("currencies"))
+    }
   }
 }
 </script>

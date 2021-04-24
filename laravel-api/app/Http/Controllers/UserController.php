@@ -22,10 +22,7 @@ class UserController extends Controller
     $auth_token = bin2hex(openssl_random_pseudo_bytes(16));
 
     // update user with token
-    User::where('id', $user['id'])
-      ->update(
-        ['auth_token' => $auth_token]
-      );
+    User::where('id', $user['id'])->update(['auth_token' => $auth_token]);
 
     return response()->json([
       'id' => $user['id'],

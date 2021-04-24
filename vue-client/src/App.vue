@@ -8,17 +8,20 @@
 </template>
 
 <script>
-import Header from "@/components/Header";
+import Header from "@/components/Header"
 
 export default {
   name: "App",
   components: {
-    "site-header": Header,
+    "site-header": Header
   },
   computed: {
     isAuthenticated() {
-      return this.$store.state.token
+      return this.$store.state.token;
     }
+  },
+  async created() {
+    
   }
 };
 </script>

@@ -5,7 +5,6 @@ namespace App\Models;
 class User extends BaseModel
 {
   protected $table = 'user';
-  const UPDATED_AT = null;
 
   protected $fillable = [
     'email',
