@@ -3,9 +3,9 @@
     <v-app-bar color="green darken-3" fixed dense dark>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title>
-        Curcon
+        <v-icon class="mb-1 ml-1">mdi-currency-eur</v-icon>urcon
         <span class="ml-3 caption">
-          For all your currency conversion needs
+          Fulfilling all of your currency conversion needs
         </span>
       </v-toolbar-title>
       <v-spacer></v-spacer>

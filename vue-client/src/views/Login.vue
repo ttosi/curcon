@@ -1,7 +1,8 @@
 <template>
   <v-card class="ma-6 mt-10">
     <v-card-title>
-      Welcome to Curcon
+      Welcome to
+      <v-icon class="mb-1 ml-2">mdi-currency-eur</v-icon>urcon
     </v-card-title>
     <v-card-subtitle>
       For all your currency conversion needs
