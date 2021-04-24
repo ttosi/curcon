@@ -15,7 +15,7 @@ class UserController extends Controller
       ['password', hash('sha256', $request['password'])]
     ])->first();
 
-    // return unauthorized if user not found
+    // user not found, unauthorized 
     if (!$user) return response()->json(false);
 
     // success, create auth token
