@@ -5,8 +5,5 @@ export default {
     return network.get(
       `/api/currency`
     )
-  },
-  async delete(id) {
-
   }
 };

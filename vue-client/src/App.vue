@@ -19,9 +19,6 @@ export default {
     isAuthenticated() {
       return this.$store.state.token;
     }
-  },
-  async created() {
-    
   }
 };
 </script>

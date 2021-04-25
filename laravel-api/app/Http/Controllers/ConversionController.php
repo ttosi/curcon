@@ -19,7 +19,7 @@ class ConversionController extends Controller
   // get:conversion/user/{user_id} - list conversions by user
   public function listByUser($user_id)
   {
-    $conversions = Conversion::where('user_id', $user_id)->with('quotes')->get();
+    $conversions = Conversion::where('user_id', $user_id)->with('quotes')->orderBy('created', 'desc')->get();
 
     // THIS IS NOT IDEAL
     //  1. Makes request for each currency rate (!)

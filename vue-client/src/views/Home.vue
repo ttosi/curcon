@@ -46,7 +46,6 @@ export default {
     return {
       conversions: [],
       loading: true,
-      search: null,
       showSelector: false
     }
   },
@@ -54,7 +53,6 @@ export default {
     async list() {
       this.loading = true;
       this.conversions = await conversion.list()
-      this.conversions.sort(c => c.id).reverse()
       this.loading = false
     },
     async add(cur) {
@@ -65,15 +63,14 @@ export default {
         quotes: []
       }
       conv.id = (await conversion.create(conv)).id
-      this.conversions.push(conv)
-      this.conversions.sort(c => c.id).reverse()
+      this.conversions.unshift(conv)
       this.showSelector = false
     },
     cancel() {
       this.showSelector = false
     }
   },
-  async mounted() {
+  async created() {
     this.list()
   }
 }

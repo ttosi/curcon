@@ -1,9 +1,9 @@
 <template>
   <v-dialog v-model="showSelector" max-width="800" persistent>
     <v-card>
-      <v-card-subtitle class="pa-3 pl-5 font-weight-regular text-h6 green darken-3 white--text">
+      <div class="text-h6 pa-3 pl-5">
         Add New Currency
-      </v-card-subtitle>
+      </div>
       <v-card-text class="pb-0">
         <v-autocomplete
           v-model="selected"
@@ -52,8 +52,7 @@ export default {
   data() {
     return {
       selected: null,
-      currencies: currencyCodes,
-      search: null,
+      currencies: currencyCodes
     }
   },
   methods: {

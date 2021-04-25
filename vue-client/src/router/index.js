@@ -15,8 +15,7 @@ const router = new VueRouter({
   routes
 });
 
-// user must be authenticated to view pages
-// that require authentication
+// user must be authenticated to view pages auth = true
 router.beforeEach((to, from, next) => {
   if(to.matched.some(r => r.meta.requireAuth)) {
     if(!store.state.token) {
