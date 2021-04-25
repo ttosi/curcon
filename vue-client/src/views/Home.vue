@@ -120,6 +120,8 @@ export default {
   },
   async mounted() {
     this.list()
+    
+    // i think i'm going to move this locally
     if (!localStorage.getItem("currencies")) {
       this.currencies = await currency.list()
       localStorage.setItem("currencies", JSON.stringify(this.currencies))

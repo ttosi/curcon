@@ -114,6 +114,7 @@
 
 <script>
 import Quote from "@/components/Quote"
+import quote from "@/entities/Quote"
 import symbols from "@/data/symbols.json"
 
 export default {
@@ -143,7 +144,15 @@ export default {
       return symbol ? symbol.symbol : ""
     },
     async add() {
-      console.log("ading")
+      const q = {
+        conversionId: this.conversion.id,
+        country: this.selected.country_code,
+        currency: this.selected.currency_code,
+        rate: 0.00,
+        baseCurrency: this.conversion.currency
+      }
+      this.conversion.quotes.push(await quote.add(q))
+      this.dialog = false
     }
   },
   mounted() {
