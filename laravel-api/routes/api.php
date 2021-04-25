@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConversionController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\QuoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,15 @@ Route::get('/conversion/user/{user_id}', [ConversionController::class, 'listByUs
 Route::post('/conversion', [ConversionController::class, 'create'])->middleware('authorized');
 Route::patch('/conversion', [ConversionController::class, 'update'])->middleware('authorized');
 Route::delete('/conversion/{id}', [ConversionController::class, 'delete'])->middleware('authorized');
+
+/*
+|--------------------------------------------------------------------------
+| QUOTE
+|--------------------------------------------------------------------------
+| post:quote    add quote to conversion
+|
+*/
+Route::post('/quote', [QuoteController::class, 'add'])->middleware('authorized');
 
 /*
 |--------------------------------------------------------------------------
