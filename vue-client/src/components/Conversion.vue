@@ -1,11 +1,6 @@
 <template>
   <div>
     <v-card class="mt-5">
-      <v-progress-linear
-        :active="false"
-        :indeterminate="true"
-        absolute
-        top />
       <v-card-subtitle class="pb-1">
         <div class="d-flex flex-row justify-space-between flex-wrap">
           <div class="text-h5">
@@ -14,7 +9,7 @@
               :class="`flag-icon-${(conversion.country).toLowerCase()}`">
             </span>
             {{ conversion.currency }}
-            <span class="mr-2" v-html="symbol(conversion.currency)"></span>
+            <span class="mr-1" v-currency-symbol="conversion.currency"></span>
             <input 
               type="number" step="0.01" min="0.01"
               v-model="conversion.amount"
@@ -23,17 +18,11 @@
           </div>
           <div>
             <v-btn 
-              @click="dialog = true"
+              @click="showSelector = true"
               title="Add Quote"
               class="mr-3" 
               fab small depressed>
               <v-icon color="green darken-2">mdi-plus</v-icon>
-            </v-btn>
-            <v-btn
-              title="Refresh Quotes"
-              class="mr-3"
-              fab small depressed>
-              <v-icon color="green darken-2">mdi-refresh</v-icon>
             </v-btn>
             <v-btn
               title="Delete Conversion"
@@ -63,100 +52,53 @@
               :quote="quote" />
         </v-card>
         <div class="caption ml-3 mt-2">
-          {{ Date.create(conversion.created).format() }}
+          {{ conversion.created | formatDatetime }}
         </div>
       </v-card-subtitle>
     </v-card>
-    <v-dialog v-model="dialog" max-width="800" persistent>
-      <v-card>
-        <v-card-subtitle class="pa-3 pl-5 font-weight-regular text-h6 green darken-3 white--text">
-          New Currency Conversion
-        </v-card-subtitle>
-        <v-card-text class="pb-0">
-          <v-autocomplete
-            v-model="selected"
-            :items="currencies"
-            :filter="filter"
-            label="Search by Currency or Country"
-            placeholder="Start typing to Search"
-            prepend-icon="mdi-map-search-outline"
-            hide-no-data
-            return-object>
-            <template v-slot:item="data">
-              <span 
-                class="flag-icon mr-1"
-                :class="`flag-icon-${(data.item.country_code).toLowerCase()}`">
-              </span>
-              {{ data.item.currency_code }} ({{ data.item.country }})
-            </template>
-            <template v-slot:selection="data">
-              <span 
-                class="flag-icon mr-1"
-                :class="`flag-icon-${(data.item.country_code).toLowerCase()}`">
-              </span>
-              {{ data.item.currency_code }} ({{ data.item.country }})
-            </template>
-          </v-autocomplete>
-        </v-card-text>
-        <v-card-actions class="pb-4 pr-4">
-          <v-spacer></v-spacer>
-          <v-btn @click="add" color="green darken-2" dark small>
-            Add
-          </v-btn>
-          <v-btn @click="dialog = false" class="ml-4" color="green darken-2" small outlined>
-            Cancel
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <currency-selector 
+      :showSelector="showSelector"
+      @add="add" 
+      @cancel="cancel" />
   </div>
 </template>
 
 <script>
-import Quote from "@/components/Quote"
 import quote from "@/entities/Quote"
-import symbols from "@/data/symbols.json"
+import Quote from "@/components/Quote"
+import CurrencySelector from "@/components/CurrencySelector"
 
 export default {
   name: "Conversion",
   props: ["conversion"],
-  components: { Quote },
+  components: {
+    Quote,
+    CurrencySelector
+  },
   data() {
     return {
       dialog: false,
-      selected: null,
-      currencies: [],
-      search: null
+      showSelector: false
     }
   },
   methods: {
     ismax(quotes, rate) {
       return Math.max(...quotes.map(r => r.rate), 0) === rate
     },
-    filter(item, query) {
-      return (
-        item.currency_code.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-        item.country.toLowerCase().indexOf(query.toLowerCase()) > -1
-      )
-    },
-    symbol(sym) {
-      const symbol = symbols.find(s => s.code === sym)
-      return symbol ? symbol.symbol : ""
-    },
-    async add() {
+    async add(cur) {
       const q = {
         conversionId: this.conversion.id,
-        country: this.selected.country_code,
-        currency: this.selected.currency_code,
-        rate: 0.00,
-        baseCurrency: this.conversion.currency
+        country: cur.country_code,
+        currency: cur.currency_code,
+        baseCurrency: this.conversion.currency,
+        rate: 0.00
       }
       this.conversion.quotes.push(await quote.add(q))
-      this.dialog = false
+      this.showSelector = false
+    },
+    cancel() {
+      this.showSelector = false
     }
-  },
-  mounted() {
-    this.currencies = JSON.parse(localStorage.getItem("currencies"))
   }
 }
 </script>

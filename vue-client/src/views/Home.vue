@@ -10,7 +10,7 @@
     </div>
     <div v-if="!loading">
       <div>
-        <v-btn @click="add" color="green darken-3" depressed dark>
+        <v-btn @click="showSelector = true" color="green darken-3" depressed dark>
           Add Conversion
         </v-btn>
         <v-btn @click="list" color="green darken-2" small outlined class="mt-3 float-right">
@@ -24,110 +24,57 @@
           :conversion="conversion" />
       </div>
     </div>
-    <v-dialog v-model="dialog" max-width="800">
-      <v-card>
-        <v-card-subtitle class="pa-3 pl-5 font-weight-regular text-h6 green darken-3 white--text">
-          New Currency Conversion
-        </v-card-subtitle>
-        <v-card-text class="pb-0">
-          <v-autocomplete
-            v-model="selected"
-            :items="currencies"
-            :filter="filter"
-            label="Search by Currency or Country"
-            placeholder="Start typing to Search"
-            prepend-icon="mdi-map-search-outline"
-            hide-no-data
-            return-object>
-            <template v-slot:item="data">
-              <span 
-                class="flag-icon mr-1"
-                :class="`flag-icon-${(data.item.country_code).toLowerCase()}`">
-              </span>
-              {{ data.item.currency_code }} ({{ data.item.country }})
-            </template>
-            <template v-slot:selection="data">
-              <span 
-                class="flag-icon mr-1"
-                :class="`flag-icon-${(data.item.country_code).toLowerCase()}`">
-              </span>
-              {{ data.item.currency_code }} ({{ data.item.country }})
-            </template>
-          </v-autocomplete>
-        </v-card-text>
-        <v-card-actions class="pb-4 pr-4">
-          <v-spacer></v-spacer>
-          <v-btn @click="save" color="green darken-2" dark small>
-            Save
-          </v-btn>
-          <v-btn @click="dialog = false" class="ml-4" color="green darken-2" small outlined>
-            Cancel
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <currency-selector 
+      :showSelector="showSelector"
+      @add="add" 
+      @cancel="cancel" />
   </div>
 </template>
 
 <script>
-import Conversion from "@/components/Conversion"
 import conversion from "@/entities/Conversion"
-import currency from "@/entities/Currency"
+import Conversion from "@/components/Conversion"
+import CurrencySelector from "@/components/CurrencySelector"
 
 export default {
   name: "Home",
   components: {
-    Conversion
+    Conversion,
+    CurrencySelector
   },
   data() {
     return {
       conversions: [],
       loading: true,
-      dialog: false,
-      selected: null,
-      currencies: [],
-      search: null
+      search: null,
+      showSelector: false
     }
   },
   methods: {
-    add() {
-      this.dialog = true
-    },
-    filter(item, query) {
-      return (
-        item.currency_code.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-        item.country.toLowerCase().indexOf(query.toLowerCase()) > -1
-      )
-    },
     async list() {
       this.loading = true;
       this.conversions = await conversion.list()
       this.conversions.sort(c => c.id).reverse()
       this.loading = false
     },
-    async save() {
+    async add(cur) {
       const conv = {
         amount: "1.00",
-        country: this.selected.country_code,
-        currency: this.selected.currency_code,
+        country: cur.country_code,
+        currency: cur.currency_code,
         quotes: []
       }
       conv.id = (await conversion.create(conv)).id
       this.conversions.push(conv)
       this.conversions.sort(c => c.id).reverse()
-      this.dialog = false
+      this.showSelector = false
+    },
+    cancel() {
+      this.showSelector = false
     }
   },
   async mounted() {
     this.list()
-    
-    // i think i'm going to move this locally
-    if (!localStorage.getItem("currencies")) {
-      this.currencies = await currency.list()
-      localStorage.setItem("currencies", JSON.stringify(this.currencies))
-    } else {
-      this.currencies = JSON.parse(localStorage.getItem("currencies"))
-    }
   }
 }
 </script>
