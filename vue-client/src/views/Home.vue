@@ -13,7 +13,11 @@
         <v-btn @click="showSelector = true" color="green darken-3" depressed dark>
           Add Conversion
         </v-btn>
-        <v-btn @click="list" color="green darken-2" small outlined class="mt-3 float-right">
+        <v-btn 
+          v-if="conversions.length > 0"
+          @click="list"
+          class="mt-3 float-right"
+          color="green darken-2" small outlined>
           Refresh All
         </v-btn>
       </div>
@@ -25,13 +29,20 @@
           @removeConversion="removeConversion" />
       </div>
       <div v-else class="ma-5 mt-10">
-        <p>Welcome to <v-icon class="mb-1 ml-1">mdi-currency-eur</v-icon>urcon! To create your first conversion:</p>
+        <p>Welcome to 
+          <v-icon class="mb-1 ml-1">mdi-currency-eur</v-icon>urcon!
+          To create your first conversion:</p>
         <ul>
           <li>Click the Add Conversion button</li>
-          <li>Select the currency you wish to see exchange rates for (this is the base currency) then click add.</li>
-          <li>The amount to convert from defaults to 1.00; this can be changed by clicking on it.</li>
-          <li>Add one or more currencies you wish to see the rates for by clicking the plus icon in the upper right.</li>
-          <li>The exchange rates are the current market rates provided by swop.cx</li>
+          <li>Select the currency you wish to see exchange
+              rates for (this is the base currency) then click add.</li>
+          <li>The amount to convert from defaults to 1.00; this can
+              be changed by clicking on it.</li>
+          <li>Add one or more currencies you wish to see the
+              rates for by clicking the plus icon in the upper right.</li>
+          <li>A yellow accent above the quote shows the best exchange rate.</li>
+          <li>The exchange rates are the current market rates
+              provided by swop.cx</li>
           <li>Click the refresh button to fetch the latest rates.</li>
           <li>Enjoy!</li>
         </ul>
@@ -75,9 +86,8 @@ export default {
         currency: currency.currency_code,
         quotes: []
       }
-      const id = await conversion.create(conv)
-      conv.id = id
-      console.log(conv);
+
+      conv.id = await conversion.create(conv)
       this.conversions.unshift(conv)
       this.showSelector = false
     },

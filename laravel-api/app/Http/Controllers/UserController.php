@@ -15,13 +15,11 @@ class UserController extends Controller
       ['password', hash('sha256', $request['password'])]
     ])->first();
 
-    // user not found, unauthorized 
+    // user not found 
     if (!$user) return response()->json(false);
 
     // success, create auth token
     $auth_token = bin2hex(openssl_random_pseudo_bytes(16));
-
-    // update user with token
     User::where('id', $user['id'])->update(['auth_token' => $auth_token]);
 
     return response()->json([
