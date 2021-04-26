@@ -28,6 +28,19 @@ const network = {
     .then((data) => {
       return data;
     });
+  },
+  delete(endpoint) {
+    return fetch(`${this.apiUrl}${endpoint}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: store.state.token,
+      }
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      return data;
+    });
   }
 };
 

@@ -5,6 +5,8 @@ export default {
     return network
       .post("/api/quote", quote);
   },
-  async delete(id) {
+  async remove(id) {
+    return network
+      .delete(`/api/quote/${id}`);
   }
 };

@@ -3,14 +3,11 @@
     <v-progress-linear v-if="ismax" color="yellow darken-1" value="100"></v-progress-linear>
     <div class="pa-5">
     <div class="body-1 mb-2">
-      <span
-        class="flag-icon mr-1"
-        :class="`flag-icon-${quote.country.toLowerCase()}`">
-      </span>
+      <span v-flag="quote.country"></span>
       {{ quote.currency }}
       {{ calculated }}
-      <span class="" v-currency-symbol="quote.currency"></span>
-      <v-icon class="ml-2 mb-1 delete-icon" small>
+      <span v-currency-symbol="quote.currency"></span>
+      <v-icon @click="remove" class="ml-2 mb-1 delete-icon" small>
         mdi-trash-can
       </v-icon>
     </div>
@@ -27,10 +24,15 @@
 <script>
 export default {
   name: "Quote",
-  props: ["quote", "amount", "ismax"],
+  props: ["quote", "amount", "ismax", "removeQuote"],
   components: {},
   data() {
     return {}
+  },
+  methods: {
+    remove() {
+      this.$emit("removeQuote", this.quote.id)
+    }
   },
   computed: {
     calculated() {

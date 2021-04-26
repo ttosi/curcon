@@ -15,17 +15,11 @@
           hide-no-data
           return-object>
           <template v-slot:item="data">
-            <span 
-              class="flag-icon mr-1"
-              :class="`flag-icon-${(data.item.country_code).toLowerCase()}`">
-            </span>
+            <span v-flag="data.item.country_code"></span>
             {{ data.item.currency_code }} ({{ data.item.country }})
           </template>
           <template v-slot:selection="data">
-            <span 
-              class="flag-icon mr-1"
-              :class="`flag-icon-${(data.item.country_code).toLowerCase()}`">
-            </span>
+            <span v-flag="data.item.country_code"></span>
             {{ data.item.currency_code }} ({{ data.item.country }})
           </template>
         </v-autocomplete>

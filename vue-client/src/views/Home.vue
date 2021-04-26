@@ -17,11 +17,24 @@
           Refresh All
         </v-btn>
       </div>
-      <div>
+      <div v-if="conversions.length > 0">
         <conversion
           v-for="conversion in conversions"
           :key="conversion.id"
-          :conversion="conversion" />
+          :conversion="conversion"
+          @removeConversion="removeConversion" />
+      </div>
+      <div v-else class="ma-5 mt-10">
+        <p>Welcome to <v-icon class="mb-1 ml-1">mdi-currency-eur</v-icon>urcon! To create your first conversion:</p>
+        <ul>
+          <li>Click the Add Conversion button</li>
+          <li>Select the currency you wish to see exchange rates for (this is the base currency) then click add.</li>
+          <li>The amount to convert from defaults to 1.00; this can be changed by clicking on it.</li>
+          <li>Add one or more currencies you wish to see the rates for by clicking the plus icon in the upper right.</li>
+          <li>The exchange rates are the current market rates provided by swop.cx</li>
+          <li>Click the refresh button to fetch the latest rates.</li>
+          <li>Enjoy!</li>
+        </ul>
       </div>
     </div>
     <currency-selector 
@@ -55,16 +68,24 @@ export default {
       this.conversions = await conversion.list()
       this.loading = false
     },
-    async add(cur) {
+    async add(currency) {
       const conv = {
         amount: "1.00",
-        country: cur.country_code,
-        currency: cur.currency_code,
+        country: currency.country_code,
+        currency: currency.currency_code,
         quotes: []
       }
-      conv.id = (await conversion.create(conv)).id
+      const id = await conversion.create(conv)
+      conv.id = id
+      console.log(conv);
       this.conversions.unshift(conv)
       this.showSelector = false
+    },
+    removeConversion(id) {
+      this.conversions.splice(
+        this.conversions.findIndex(c => c.id === id), 1
+      )
+      conversion.remove(id)
     },
     cancel() {
       this.showSelector = false

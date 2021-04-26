@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import network from "@/services/network";
+
 export default {
   name: "Login",
   components: {},

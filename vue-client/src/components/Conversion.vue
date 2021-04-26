@@ -4,10 +4,7 @@
       <v-card-subtitle class="pb-1">
         <div class="d-flex flex-row justify-space-between flex-wrap">
           <div class="text-h5">
-            <span 
-              class="flag-icon mr-1"
-              :class="`flag-icon-${(conversion.country).toLowerCase()}`">
-            </span>
+            <span v-flag="conversion.country"></span>
             {{ conversion.currency }}
             <span class="mr-1" v-currency-symbol="conversion.currency"></span>
             <input 
@@ -27,7 +24,7 @@
             <v-btn
               title="Delete Conversion"
               fab small depressed>
-              <v-icon color="green darken-2">mdi-trash-can-outline</v-icon>
+              <v-icon @click="remove" color="green darken-2">mdi-trash-can-outline</v-icon>
             </v-btn>
           </div>
         </div>
@@ -49,7 +46,8 @@
               :key="quote.id"
               :ismax="ismax(conversion.quotes, quote.rate)"
               :amount="conversion.amount"
-              :quote="quote" />
+              :quote="quote"
+              @removeQuote="removeQuote" />
         </v-card>
         <div class="caption ml-3 mt-2">
           {{ conversion.created | formatDatetime }}
@@ -97,6 +95,15 @@ export default {
     },
     cancel() {
       this.showSelector = false
+    },
+    remove() {
+      this.$emit("removeConversion", this.conversion.id)
+    },
+    removeQuote(id, v) {
+      this.conversion.quotes.splice(
+        this.conversion.quotes.findIndex(q => q.id === id), 1
+      )
+      quote.remove(id)
     }
   }
 }

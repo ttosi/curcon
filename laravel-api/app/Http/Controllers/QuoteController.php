@@ -32,4 +32,10 @@ class QuoteController extends Controller
 
     return $quote;
   }
+
+  public function delete($id)
+  {
+    Quote::destroy($id);
+    return response(200);
+  }
 }

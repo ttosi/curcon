@@ -59,16 +59,19 @@ class ConversionController extends Controller
     $conversion->amount = 1.00;
     $conversion->save();
 
-    return response()->json(['id', $conversion->id]);
-  }
-
-  // update:conversion - update conversion
-  public function update(Request $request)
-  {
+    return response()->json($conversion->id);
   }
 
   // delete:conversion/{id} - delete conversion
   public function delete($id)
   {
+    $conversion = Conversion::where('id', $id)->with('quotes')->first();
+    foreach ($conversion->quotes as $quote) 
+    {
+      $quote->delete();
+    }
+    $conversion->delete();
+
+    return response(200);
   }
 }

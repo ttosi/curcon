@@ -11,5 +11,8 @@ export default {
     return network
       .post("/api/conversion", conversion);
   },
-  async delete(id) {},
+  async remove(id) {
+    return network
+      .delete(`/api/conversion/${id}`);
+  },
 };

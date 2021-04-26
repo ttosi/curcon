@@ -31,7 +31,6 @@ Route::get('/logout/{id}', [UserController::class, 'logout'])->middleware('autho
 Route::get('/conversion/{id}', [ConversionController::class, 'get'])->middleware('authorized');
 Route::get('/conversion/user/{user_id}', [ConversionController::class, 'listByUser'])->middleware('authorized');
 Route::post('/conversion', [ConversionController::class, 'create'])->middleware('authorized');
-Route::patch('/conversion', [ConversionController::class, 'update'])->middleware('authorized');
 Route::delete('/conversion/{id}', [ConversionController::class, 'delete'])->middleware('authorized');
 
 /*
@@ -42,6 +41,7 @@ Route::delete('/conversion/{id}', [ConversionController::class, 'delete'])->midd
 |
 */
 Route::post('/quote', [QuoteController::class, 'add'])->middleware('authorized');
+Route::delete('/quote/{id}', [QuoteController::class, 'delete'])->middleware('authorized');
 
 /*
 |--------------------------------------------------------------------------
