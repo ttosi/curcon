@@ -2,7 +2,7 @@
 
 Allows a user to easily see exchanges rates between different currencies.
 
-How it works: First, a user creates one or more conversions. A conversion defines the "to be converted from" currency and the amount to be converted. Next, a user adds one more currnecies to see the going exchnage rate between the base and quote currencies.
+How it works: First, a user creates one or more conversions. A conversion defines the "to be converted from" currency and the amount to be converted. Next, a user adds one more currencies to see the going exchange rate between the base and quote currencies.
 
 ### To run this project in local development
 Clone repo
