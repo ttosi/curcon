@@ -27,8 +27,6 @@ class QuoteController extends Controller
 
     $quote->rate = $res[0]->quote;
     $quote->save();
-    
-    error_log($quote);
 
     return $quote;
   }

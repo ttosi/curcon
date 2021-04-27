@@ -21,8 +21,8 @@ class ConversionController extends Controller
   {
     $conversions = Conversion::where('user_id', $user_id)->with('quotes')->orderBy('created', 'desc')->get();
 
-    // THIS IS NOT IDEAL
-    //  1. Makes request for each currency rate (!)
+    // need to refactor
+    //  1. Makes 1 request for each currency rate
     //  2. Doesn't update DB with current rate,
     //     would be good to cache the rate and only
     //     make request if > 1 day old
