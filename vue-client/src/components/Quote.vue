@@ -31,7 +31,9 @@ export default {
   },
   methods: {
     remove() {
-      this.$emit("removeQuote", this.quote.id)
+      if(confirm("Are you sure?")) {
+        this.$emit("removeQuote", this.quote.id)
+      }
     }
   },
   computed: {

@@ -16,6 +16,7 @@ export default new Vuex.Store({
   },
   actions: {
     setUser(context, user) {
+      // persist the user authentiction
       localStorage.setItem("userId", user.id);
       localStorage.setItem("token", user.auth_token);
       context.commit("setUser", user);

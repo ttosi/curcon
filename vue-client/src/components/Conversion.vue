@@ -79,9 +79,6 @@ export default {
     }
   },
   methods: {
-    ismax(quotes, rate) {
-      return Math.max(...quotes.map(r => r.rate), 0) === rate
-    },
     async add(cur) {
       const q = {
         conversionId: this.conversion.id,
@@ -97,13 +94,18 @@ export default {
       this.showSelector = false
     },
     remove() {
-      this.$emit("removeConversion", this.conversion.id)
+      if(confirm("Are you sure?")) {
+        this.$emit("removeConversion", this.conversion.id)
+      }
     },
     removeQuote(id, v) {
       this.conversion.quotes.splice(
         this.conversion.quotes.findIndex(q => q.id === id), 1
       )
       quote.remove(id)
+    },
+     ismax(quotes, rate) {
+      return Math.max(...quotes.map(r => r.rate), 0) === rate
     }
   }
 }
