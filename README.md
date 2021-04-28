@@ -2,9 +2,9 @@
 
 Allows a user to easily see exchanges rates between different currencies.
 
-How it works: First, a user creates one or more conversions. A conversion defines the "to be converted from" currency and the amount to be converted. Next, a user adds one more currencies to see the going exchange rate between the base and quote currencies.
+A user creates one or more conversions. A conversion defines the "to be converted from" currency and the amount to be converted. A user then adds one more currencies to see the going exchange rate between the base and quote currencies.
 
-### To run this project in local development
+## Run in local development
 Clone repo
 
 ```
@@ -13,7 +13,7 @@ git clone https://github.com/ttosi/curcon.git
 
 The client and the API run independently.
 
-#### Setup and run the API
+### API
 In the `curcon/laravel-api` directory rename or copy `.env.example` to `.env`
 
 In `.env` add 
@@ -47,7 +47,7 @@ php artisan serve
 
 Ensure the api is running on port 8000
 
-#### Setup and run the Client
+### Client
 
 Run the following commands in the `curcon/vue-client` directory
 
@@ -63,8 +63,6 @@ yarn
 
 yarn serve
 ```
-
-#### Use the app
 
 In a browser navigate to `http://localhost:8080/login`
 
