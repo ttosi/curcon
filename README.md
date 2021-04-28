@@ -57,7 +57,7 @@ npm install
 npm run serve
 ```
 
-or if you use yarn
+or if you prefer yarn
 ```
 yarn
 
