@@ -15,7 +15,6 @@
           hide-no-data
           return-object>
           <template v-slot:item="data">
-            <span v-flag="data.item.country_code"></span>
             {{ data.item.currency_code }} ({{ data.item.country }})
           </template>
           <template v-slot:selection="data">
