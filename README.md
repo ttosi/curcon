@@ -21,9 +21,10 @@ In `.env` add
 ```
 SWOP_API_KEY=[your swop.cx api key here]
 ```
-and update the database variables to fit your needs
+and update the database connection variables to fit your needs
 
 ```
+DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=curcon
